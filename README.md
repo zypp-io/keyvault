@@ -7,34 +7,45 @@ Azure key vaults
 
 ## Index
 - [Usage](#usage)
-    - [get_secrets](#get_secrets)
-    - [upload_secrets](#upload_secrets)
+    - [Pip install package](#pip-install-this-public-package)
+    - [Get secrets](#get-secrets)
+    - [Upload secrets](#upload-secrets)
 - [mandatory .env variables](#mandatory-env-variables)
 
 # Usage
-This package is designed for easily pulling and creating secrets in Azure key vaults. There are 2 
-functions that can be used:
+This package is designed for easily pulling and creating secrets in Azure key vaults. 
 
-## get_secrets
+## pip install this public package
+```.sh
+pip install git+ssh://git@github.com/zypp-io/keyvault.git
+```
+
+## Get secrets
 This function can be used to pull secrets from the vault. This function will only work if you have
 set the [required environment variables](#mandatory-env-variables)
 
 ```python
+import os 
 from keyvault import get_secrets
+from dotenv import load_dotenv, find_dotenv
 
-secrets = get_secrets(keyvault_name="my-keyvault-name")
+load_dotenv(find_dotenv(), verbose=True)
 
+secrets = get_secrets(os.environ.get("AZURE_KEYVAULT_NAME"))
 # Returns a dictionary containing secret_name, secret_value pairs
 ```
      
-## upload_secrets
+## Upload secrets
 This function is designed for making it easy to upload sensitive project secrets to Azure key vault.
 The function reads the `.env` file and uploads the names and values to Azure key vault.
 
 ```python
+import os 
+from dotenv import load_dotenv, find_dotenv
 from keyvault import upload_secrets
 
-secrets = upload_secrets(keyvault_name="my-keyvault-name")
+load_dotenv(find_dotenv(), verbose=True)
+secrets = upload_secrets(keyvault_name=os.environ.get("AZURE_KEYVAULT_NAME"))
 
 # Uploads your current .env variables to azure key vault
 ```
