@@ -1,4 +1,5 @@
 from keyvault.auth import create_keyvault_client
+from dotenv import load_dotenv, find_dotenv
 
 
 def get_secret_list(client) -> list:
@@ -46,6 +47,7 @@ def get_secrets(keyvault_name: str) -> dict:
 
 
 if __name__ == "__main__":
+    load_dotenv(find_dotenv(), verbose=True)
 
     azure_secrets = get_secrets(keyvault_name="staffing-general")
     print(azure_secrets)

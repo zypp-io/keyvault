@@ -1,6 +1,6 @@
 import logging
 from keyvault.auth import create_keyvault_client
-from dotenv import find_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 
 def get_dotenv_secrets() -> dict:
@@ -77,5 +77,5 @@ def upload_secrets(keyvault_name: str):
 
 
 if __name__ == "__main__":
-
+    load_dotenv(find_dotenv(), verbose=True)
     upload_secrets(keyvault_name="staffing-general")
