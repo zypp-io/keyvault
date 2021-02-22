@@ -7,8 +7,8 @@ Azure key vaults
 
 ## Index
 - [Usage](#usage)
-    -[get_secrets](#get_secrets)
-    -[upload_secrets](#upload_secrets)
+    - [get_secrets](#get_secrets)
+    - [upload_secrets](#upload_secrets)
 - [mandatory .env variables](#mandatory-env-variables)
 
 # Usage
