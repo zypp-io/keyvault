@@ -7,15 +7,15 @@ with open("requirements.txt") as fp:
     install_requires = fp.read()
 
 setup(
-    name="example-pkg-YOUR-USERNAME-HERE",  # Replace with your own username
+    name="keyvault",  # Replace with your own username
     version="0.0.1",
-    author="Example Author",
-    author_email="author@zypp.io",
-    description="A small example package",
+    author="Zypp",
+    author_email="hello@zypp.io",
+    description="A small package for handling project secrets",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords="python, forecasting, data-warehouse",
-    url="https://github.com/zypp/sampleproject",
+    keywords="python, azure, keyvault",
+    url="https://github.com/zypp/keyvault",
     packages=find_packages(),
     install_requires=install_requires,
     entry_points={"console_scripts": ["run=package.module:do_script"]},
@@ -26,7 +26,7 @@ setup(
     ],
     python_requires=">=3.7",
     project_urls={
-        "Bug Reports": "https://github.com/zypp/sampleproject/issues",
-        "Source": "https://github.com/zypp/sampleproject",
+        "Bug Reports": "https://github.com/zypp/keyvault/issues",
+        "Source": "https://github.com/zypp/keyvault",
     },
 )
