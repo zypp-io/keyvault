@@ -1,5 +1,7 @@
 from keyvault.auth import create_keyvault_client
 from dotenv import load_dotenv, find_dotenv
+import logging
+import os
 
 
 def get_secret_list(client) -> list:
@@ -46,8 +48,32 @@ def get_secrets(keyvault_name: str) -> dict:
     return d
 
 
+def secrets_to_environment(secrets: dict) -> None:
+    """
+    This function the azure keyvault secrets in the environment variables.
+
+    Parameters
+    ----------
+    secrets: dict
+        secrets from Azure keyvault
+
+    Returns
+    -------
+    None
+    """
+
+    logging.debug("replacing - characters with _ character")
+    secrets = {k.replace("-", "_"): v for k, v in secrets.items()}
+
+    for key, value in secrets.items():
+        os.environ[key] = value
+
+    logging.info(f"succesfully stored {len(secrets)} keyvault secrets as environment variables.")
+
+
 if __name__ == "__main__":
     load_dotenv(find_dotenv(), verbose=True)
 
     azure_secrets = get_secrets(keyvault_name="staffing-general")
     print(azure_secrets)
+    secrets_to_environment(azure_secrets)

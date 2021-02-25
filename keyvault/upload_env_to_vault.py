@@ -3,6 +3,7 @@ from keyvault.auth import create_keyvault_client
 from dotenv import load_dotenv, find_dotenv
 from tqdm import tqdm
 
+
 def get_dotenv_secrets(dotenv_file: str) -> dict:
     """
     This function is designed for easily getting the dictionary of secrets that are currently
