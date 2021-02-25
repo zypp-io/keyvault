@@ -84,5 +84,6 @@ def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
 
 
 if __name__ == "__main__":
-    load_dotenv(find_dotenv(), verbose=True)
-    upload_secrets(keyvault_name="staffing-general")
+    dotenv_file = find_dotenv()
+    load_dotenv(dotenv_file, verbose=True)
+    upload_secrets(keyvault_name="staffing-general", dotenv_file=dotenv_file)
