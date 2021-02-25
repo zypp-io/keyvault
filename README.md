@@ -44,8 +44,9 @@ import os
 from dotenv import load_dotenv, find_dotenv
 from keyvault import upload_secrets
 
-load_dotenv(find_dotenv(), verbose=True)
-secrets = upload_secrets(keyvault_name=os.environ.get("AZURE_KEYVAULT_NAME"))
+dotenv_file = find_dotenv()
+load_dotenv(dotenv_file, verbose=True)
+upload_secrets(keyvault_name="staffing-general", dotenv_file=dotenv_file)
 
 # Uploads your current .env variables to azure key vault
 ```

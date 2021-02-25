@@ -3,23 +3,28 @@ from keyvault.auth import create_keyvault_client
 from dotenv import load_dotenv, find_dotenv
 
 
-def get_dotenv_secrets() -> dict:
+def get_dotenv_secrets(dotenv_file: str) -> dict:
     """
     This function is designed for easily getting the dictionary of secrets that are currently
     stored in the local .env file. This is useful when you want to create the key value pairs
     in Azure key vaults, using the azure package.
+
+    Parameters
+    ----------
+    dotenv_file: str
+        dotenv file containing the local secrets
 
     Returns
     -------
         secrets: dict
             dictionairy containing local secret keys.
     """
-    dotenv_location = find_dotenv()
-    if dotenv_location == "":
+
+    if dotenv_file == "":
         logging.info("no .env file found")
         return dict()
 
-    with open(dotenv_location, "r") as f:
+    with open(dotenv_file, "r") as f:
         lines = f.read().splitlines()  # read all the lines in the .env file
 
     local_secrets = {}
@@ -43,10 +48,12 @@ def get_dotenv_secrets() -> dict:
     return local_secrets
 
 
-def upload_secrets(keyvault_name: str):
+def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
     """
     Parameters
     ----------
+    dotenv_file: str
+        file location of the .env file
     keyvault_name: str
         name of the keyvault containing the secrets
 
@@ -57,7 +64,7 @@ def upload_secrets(keyvault_name: str):
     """
 
     client = create_keyvault_client(keyvault_name=keyvault_name)
-    local_secrets = get_dotenv_secrets()
+    local_secrets = get_dotenv_secrets(dotenv_file)
 
     if not len(local_secrets):
         logging.info("no secrets found in .env file")
@@ -77,5 +84,6 @@ def upload_secrets(keyvault_name: str):
 
 
 if __name__ == "__main__":
-    load_dotenv(find_dotenv(), verbose=True)
-    upload_secrets(keyvault_name="staffing-general")
+    dotenv_file = find_dotenv()
+    load_dotenv(dotenv_file, verbose=True)
+    upload_secrets(keyvault_name="staffing-general", dotenv_file=dotenv_file)
