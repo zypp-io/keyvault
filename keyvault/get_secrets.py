@@ -48,20 +48,20 @@ def get_secrets(keyvault_name: str) -> dict:
     return d
 
 
-def secrets_to_environment(secrets: dict) -> None:
+def secrets_to_environment(keyvault_name: str) -> None:
     """
     This function the azure keyvault secrets in the environment variables.
 
     Parameters
     ----------
-    secrets: dict
-        secrets from Azure keyvault
+    keyvault_name: str
+        name of the keyvault containing the secrets
 
     Returns
     -------
     None
     """
-
+    secrets = get_secrets(keyvault_name)
     logging.debug("replacing - characters with _ character")
     secrets = {k.replace("-", "_"): v for k, v in secrets.items()}
 
@@ -76,4 +76,4 @@ if __name__ == "__main__":
 
     azure_secrets = get_secrets(keyvault_name="staffing-general")
     print(azure_secrets)
-    secrets_to_environment(azure_secrets)
+    secrets_to_environment(keyvault_name="staffing-general")
