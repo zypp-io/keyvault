@@ -1,7 +1,7 @@
 import logging
 from keyvault.auth import create_keyvault_client
 from dotenv import load_dotenv, find_dotenv
-
+from tqdm import tqdm
 
 def get_dotenv_secrets(dotenv_file: str) -> dict:
     """
@@ -77,7 +77,8 @@ def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
     if _consent != "Y":  # if not equal to yes, abort the creation process.
         return None
 
-    for secret_name, secret_value in local_secrets.items():
+    for secret_name, secret_value in tqdm(local_secrets.items(), desc="creating secrets"):
+        logging.debug(f"creating secret name {secret_name}")
         client.set_secret(secret_name, secret_value)
 
     logging.info(f"succesfully created {len(local_secrets)} secrets!")
