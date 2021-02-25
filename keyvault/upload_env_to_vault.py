@@ -77,7 +77,7 @@ def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
     if _consent != "Y":  # if not equal to yes, abort the creation process.
         return None
 
-    for secret_name, secret_value in tqdm(local_secrets.items(), desc=f"creating secrets"):
+    for secret_name, secret_value in tqdm(local_secrets.items(), desc="creating secrets"):
         logging.debug(f"creating secret name {secret_name}")
         client.set_secret(secret_name, secret_value)
 
