@@ -45,7 +45,6 @@ def get_dotenv_secrets(dotenv_file: str) -> dict:
                 continue
 
             secret_value = line.split("=", 1)[1].replace('"', "")
-            secret_key = secret_key.replace("_", "-")  # Azure does not accept _ in names. FFS
             local_secrets[secret_key] = secret_value  # save key, values to a the dictionary
 
     return local_secrets
@@ -88,6 +87,7 @@ def send_secrets(client: SecretClient, secrets: dict) -> None:
     """
 
     for secret_name, secret_value in tqdm(secrets.items(), desc="creating secrets"):
+        secret_name = secret_name.replace("_", "-")  # Azure does not accept _ in names. FFS
         logging.debug(f"creating secret name {secret_name}")
         client.set_secret(secret_name, secret_value)
 
