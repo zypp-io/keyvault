@@ -66,7 +66,7 @@ def secrets_to_environment(keyvault_name: str) -> None:
     secrets = {k.replace("-", "_"): v for k, v in secrets.items()}
 
     for key, value in secrets.items():
-        secret_key = secret_key.replace("_", "-")  # Azure does not accept _ in names. FFS
+        key = key.replace("_", "-")  # Azure does not accept _ in names. FFS
         os.environ[key] = value
 
     logging.info(f"succesfully stored {len(secrets)} keyvault secrets as environment variables.")
