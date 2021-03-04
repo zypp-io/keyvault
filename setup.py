@@ -8,7 +8,7 @@ with open("requirements.txt") as fp:
 
 setup(
     name="keyvault",  # Replace with your own username
-    version="0.0.7",
+    version="0.0.8",
     author="Zypp",
     author_email="hello@zypp.io",
     description="A small package for handling project secrets",

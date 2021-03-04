@@ -1,6 +1,7 @@
 from keyvault.get_secrets import get_secrets
 from keyvault.get_secrets import secrets_to_environment
 from keyvault.upload_env_to_vault import upload_secrets
+from keyvault.upload_env_to_vault import upload_secrets_dict
 
 import logging
 

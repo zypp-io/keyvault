@@ -1,5 +1,7 @@
 import logging
 from keyvault.auth import create_keyvault_client
+from azure.keyvault.secrets import SecretClient
+
 from dotenv import load_dotenv, find_dotenv
 from tqdm import tqdm
 
@@ -49,6 +51,56 @@ def get_dotenv_secrets(dotenv_file: str) -> dict:
     return local_secrets
 
 
+def upload_secrets_dict(keyvault_name: str, secret_dict: dict) -> None:
+    """
+    Parameters
+    ----------
+    keyvault_name: str
+        name of the keyvault containing the secrets
+    secret_dict: dict
+        dictionary containing secrets
+
+    Returns
+    -------
+    None
+        creates the secret in the keyvault.
+    """
+
+    client = create_keyvault_client(keyvault_name=keyvault_name)
+    send_secrets(client, secret_dict)
+
+
+def send_secrets(client: SecretClient, secrets: dict) -> None:
+    """
+
+    Parameters
+    ----------
+    client : SecretClient
+        keyvault client
+
+    secrets: dict
+        dictionary containing the secrets
+
+    Returns
+    -------
+        None. Uploads the secrets to azure keyvault.
+
+    """
+
+    print(f"about to create the secrets: {', '.join(secrets.keys())}")
+
+    _consent = input("continue? (Y/n)").strip()[0].upper()  # first character only, to upper.
+
+    if _consent != "Y":  # if not equal to yes, abort the creation process.
+        return None
+
+    for secret_name, secret_value in tqdm(secrets.items(), desc="creating secrets"):
+        logging.debug(f"creating secret name {secret_name}")
+        client.set_secret(secret_name, secret_value)
+
+    logging.info(f"succesfully created {len(secrets)} secrets!")
+
+
 def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
     """
     Parameters
@@ -70,19 +122,7 @@ def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
     if not len(local_secrets):
         logging.info("no secrets found in .env file")
         return None
-
-    print(f"about to create the secrets: {', '.join(local_secrets.keys())}")
-
-    _consent = input("continue? (Y/n)").strip()[0].upper()  # first character only, to upper.
-
-    if _consent != "Y":  # if not equal to yes, abort the creation process.
-        return None
-
-    for secret_name, secret_value in tqdm(local_secrets.items(), desc="creating secrets"):
-        logging.debug(f"creating secret name {secret_name}")
-        client.set_secret(secret_name, secret_value)
-
-    logging.info(f"succesfully created {len(local_secrets)} secrets!")
+    send_secrets(client, local_secrets)
 
 
 if __name__ == "__main__":
