@@ -87,13 +87,6 @@ def send_secrets(client: SecretClient, secrets: dict) -> None:
 
     """
 
-    print(f"about to create the secrets: {', '.join(secrets.keys())}")
-
-    _consent = input("continue? (Y/n)").strip()[0].upper()  # first character only, to upper.
-
-    if _consent != "Y":  # if not equal to yes, abort the creation process.
-        return None
-
     for secret_name, secret_value in tqdm(secrets.items(), desc="creating secrets"):
         logging.debug(f"creating secret name {secret_name}")
         client.set_secret(secret_name, secret_value)
