@@ -1,8 +1,9 @@
-from keyvault.get_secrets import get_secrets
 from keyvault.get_secrets import secrets_to_environment
-from keyvault.upload_env_to_vault import upload_secrets
-from keyvault.upload_env_to_vault import upload_secrets_dict
-from keyvault.upload_env_to_vault import get_dotenv_secrets
+from keyvault.utils import get_dotenv_secrets
+from keyvault.get_secrets import get_keyvault_secrets
+from keyvault.utils import dotenv_to_keyvault
+from keyvault.utils import dict_to_keyvault
+
 
 import logging
 

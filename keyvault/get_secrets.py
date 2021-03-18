@@ -26,7 +26,7 @@ def get_secret_list(client) -> list:
     return secrets
 
 
-def get_secrets(keyvault_name: str) -> dict:
+def get_keyvault_secrets(keyvault_name: str) -> dict:
     """
     Parameters
     ----------
@@ -61,7 +61,7 @@ def secrets_to_environment(keyvault_name: str) -> None:
     -------
     None
     """
-    secrets = get_secrets(keyvault_name)
+    secrets = get_keyvault_secrets(keyvault_name)
     logging.debug("replacing - characters with _ character")
     secrets = {k.replace("-", "_"): v for k, v in secrets.items()}
 
@@ -74,6 +74,6 @@ def secrets_to_environment(keyvault_name: str) -> None:
 if __name__ == "__main__":
     load_dotenv(find_dotenv(), verbose=True)
 
-    azure_secrets = get_secrets(keyvault_name="staffing-general")
+    azure_secrets = get_keyvault_secrets(keyvault_name="zypp-keyvault")
     print(azure_secrets)
-    secrets_to_environment(keyvault_name="staffing-general")
+    secrets_to_environment(keyvault_name="zypp-keyvault")
