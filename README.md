@@ -4,6 +4,7 @@ Azure key vaults
 ===
 > Repository for explaining how to use Azure key vaults in our projects.
 
+![Flowdiagram](docs/project_layout.png)
 
 ## Index
 - [Usage](#usage)
