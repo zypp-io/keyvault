@@ -50,7 +50,7 @@ def get_dotenv_secrets(dotenv_file: str) -> dict:
     return local_secrets
 
 
-def upload_secrets_dict(keyvault_name: str, secret_dict: dict) -> None:
+def dict_to_keyvault(keyvault_name: str, secret_dict: dict) -> None:
     """
     Parameters
     ----------
@@ -94,7 +94,7 @@ def send_secrets(client: SecretClient, secrets: dict) -> None:
     logging.info(f"succesfully created {len(secrets)} secrets!")
 
 
-def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
+def dotenv_to_keyvault(keyvault_name: str, dotenv_file: str) -> None:
     """
     Parameters
     ----------
@@ -121,4 +121,5 @@ def upload_secrets(keyvault_name: str, dotenv_file: str) -> None:
 if __name__ == "__main__":
     dotenv_file = find_dotenv()
     load_dotenv(dotenv_file, verbose=True)
-    upload_secrets(keyvault_name="staffing-general", dotenv_file=dotenv_file)
+    print(get_dotenv_secrets(dotenv_file))
+    dotenv_to_keyvault(keyvault_name="zypp-keyvault", dotenv_file=dotenv_file)
