@@ -40,11 +40,9 @@ secrets_to_environment(keyvault_name="mykeyvault")
 Function for reading the local .env file and capturing the secret_name, secret_value as key value pairs.
 
 ```python
-from dotenv import find_dotenv
 from keyvault import get_dotenv_secrets
 
-dotenv_file = find_dotenv()
-get_dotenv_secrets(dotenv_file=dotenv_file)
+get_dotenv_secrets(dotenv_file=".env")
 ```
      
 
@@ -65,12 +63,9 @@ This function is designed for making it easy to upload sensitive project secrets
 The function reads the `.env` file and uploads the names and values to Azure key vault.
 
 ```python
-from dotenv import find_dotenv
 from keyvault import dotenv_to_keyvault
-
-dotenv_file = find_dotenv()
-dotenv_to_keyvault(keyvault_name="mykeyvault", dotenv_file=dotenv_file)
-
+ 
+dotenv_to_keyvault(keyvault_name="mykeyvault", dotenv_file=".env")
 # Uploads your current .env variables to azure key vault
 ```
 
