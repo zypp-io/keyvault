@@ -1,5 +1,4 @@
 from keyvault.auth import create_keyvault_client
-from dotenv import load_dotenv, find_dotenv
 import logging
 import os
 
