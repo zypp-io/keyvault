@@ -1,8 +1,6 @@
 import logging
 from keyvault.auth import create_keyvault_client
 from azure.keyvault.secrets import SecretClient
-
-from dotenv import load_dotenv, find_dotenv
 from tqdm import tqdm
 
 
