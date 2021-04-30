@@ -7,7 +7,7 @@ with open("requirements.txt") as fp:
     install_requires = fp.read()
 
 setup(
-    name="keyvault",  # Replace with your own username
+    name="keyvault",
     version="0.1.0",
     author="Zypp",
     author_email="hello@zypp.io",

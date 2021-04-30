@@ -1,4 +1,4 @@
-<p align="center"><img alt="logo" src="https://www.zypp.io/static/assets/img/logos/Main logo - White/Zypp - White - JPG.jpg" width="200"></p>
+<p align="center"><img alt="logo" src="https://www.zypp.io/static/assets/img/logos/zypp/black/250px.png" width="200"></p>
 
 Azure key vaults
 ===

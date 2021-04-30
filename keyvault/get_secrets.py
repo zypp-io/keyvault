@@ -69,11 +69,3 @@ def secrets_to_environment(keyvault_name: str) -> None:
         os.environ[key] = value
 
     logging.info(f"succesfully stored {len(secrets)} keyvault secrets as environment variables.")
-
-
-if __name__ == "__main__":
-    load_dotenv(find_dotenv(), verbose=True)
-
-    azure_secrets = get_keyvault_secrets(keyvault_name="zypp-keyvault")
-    print(azure_secrets)
-    secrets_to_environment(keyvault_name="zypp-keyvault")

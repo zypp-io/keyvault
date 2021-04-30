@@ -116,10 +116,3 @@ def dotenv_to_keyvault(keyvault_name: str, dotenv_file: str) -> None:
         logging.info("no secrets found in .env file")
         return None
     send_secrets(client, local_secrets)
-
-
-if __name__ == "__main__":
-    dotenv_file = find_dotenv()
-    load_dotenv(dotenv_file, verbose=True)
-    print(get_dotenv_secrets(dotenv_file))
-    dotenv_to_keyvault(keyvault_name="zypp-keyvault", dotenv_file=dotenv_file)
