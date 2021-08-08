@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="logo" src="https://www.zypp.io/static/assets/img/logos/zypp/white/500px.png"  width="200"/>
+</p>
+
 <div style="text-align:center"><img alt="logo" src="https://www.zypp.io/static/assets/img/logos/zypp/white/500px.png" width="200"></div><br>
 
 [![Downloads](https://pepy.tech/badge/keyvault)](https://pepy.tech/project/keyvault)
