@@ -21,10 +21,11 @@ Azure key vaults
     - [Get keyvault secrets](#get-keyvault-secrets)
     - [Dotenv to keyvault](#dotenv-to-keyvault)
     - [Dict to keyvault](#dict-to-keyvault)
+    - [Delete keyvault secrets](#delete-keyvault-secrets)
 - [mandatory .env variables](#mandatory-env-variables)
 
 # Usage
-This package is designed for easily pulling and creating secrets in Azure key vaults. 
+This package is designed for easily pulling and creating secrets in Azure key vaults.
 
 ## pip install this public package
 ```.sh
@@ -32,7 +33,7 @@ pip install git+ssh://git@github.com/zypp-io/keyvault.git
 ```
 
 ## Secrets to environment
-This function sets the keyvault secrets to the runtime environment variables. 
+This function sets the keyvault secrets to the runtime environment variables.
 This function will only work if you have set the [required environment variables](#mandatory-env-variables)
 
 ```python
@@ -40,7 +41,7 @@ from keyvault import secrets_to_environment
 
 secrets_to_environment(keyvault_name="mykeyvault")
 ```
-     
+
 
 
 ## Get dotenv secrets
@@ -51,7 +52,7 @@ from keyvault import get_dotenv_secrets
 
 get_dotenv_secrets(dotenv_file=".env")
 ```
-     
+
 
 ## Get keyvault secrets
 This function can be used to pull secrets from the vault. This function will only work if you have
@@ -63,7 +64,7 @@ from keyvault import get_keyvault_secrets
 secrets = get_keyvault_secrets(keyvault_name="mykeyvault")
 # Returns a dictionary containing secret_name, secret_value pairs
 ```
-     
+
 
 ## dotenv to keyvault
 This function is designed for making it easy to upload sensitive project secrets to Azure key vault.
@@ -71,7 +72,7 @@ The function reads the `.env` file and uploads the names and values to Azure key
 
 ```python
 from keyvault import dotenv_to_keyvault
- 
+
 dotenv_to_keyvault(keyvault_name="mykeyvault", dotenv_file=".env")
 # Uploads your current .env variables to azure key vault
 ```
@@ -85,8 +86,17 @@ from keyvault import dict_to_keyvault
 dict_to_keyvault(keyvault_name="mykeyvault", secret_dict={'SECRET_NAME': 'secret value'})
 ```
 
-# mandatory .env variables
-There are 4 environment variables that are necessary for authenticating with the azure key vault.
+## Delete keyvault secrets
+The function lets you delete secrets in the keyvault. Secrets will be deleted with soft_delete enabled.
+
+```python
+from keyvault import delete_keyvault_secrets
+
+delete_keyvault_secrets(keyvault_name="mykeyvault", secret_list=["SECRET_NAME"])
+```
+
+# mandatory environment variables
+There are 3 environment variables that are necessary for authenticating with the azure key vault.
 These variables always need to be present in the project in order for the secrets to be retrieved.
 
 ```.env
