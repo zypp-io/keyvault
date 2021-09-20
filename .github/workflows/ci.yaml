@@ -35,3 +35,11 @@ jobs:
     - name: Python Black Check
       run: |
         black --line-length=100 --check .
+    - name: Test with pytest
+      env:
+        TEST_KEYVAULT_NAME: ${{ secrets.TEST_KEYVAULT_NAME }}
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      run: |
+        pytest keyvault
