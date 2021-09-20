@@ -1,7 +1,11 @@
 import logging
-from keyvault.auth import create_keyvault_client
+from time import sleep
+
+from azure.core.exceptions import ResourceExistsError
 from azure.keyvault.secrets import SecretClient
 from tqdm import tqdm
+
+from keyvault.auth import create_keyvault_client
 
 
 def get_dotenv_secrets(dotenv_file: str) -> dict:
@@ -87,7 +91,17 @@ def send_secrets(client: SecretClient, secrets: dict) -> None:
     for secret_name, secret_value in tqdm(secrets.items(), desc="creating secrets"):
         secret_name = secret_name.replace("_", "-")  # Azure does not accept _ in names. FFS
         logging.debug(f"creating secret name {secret_name}")
-        client.set_secret(secret_name, secret_value)
+        try:
+            client.set_secret(secret_name, secret_value)
+        except ResourceExistsError:
+            # if the secret already exists, first recover the secret and then update the secret.
+            client.begin_recover_deleted_secret(secret_name)
+            # it takes some time to recover the secret.
+
+            for _ in tqdm(range(10), desc="Secret is in soft delete state: Waiting to recover..."):
+                sleep(1)
+
+            client.set_secret(secret_name, secret_value)
 
     logging.info(f"succesfully created {len(secrets)} secrets!")
 
@@ -114,3 +128,26 @@ def dotenv_to_keyvault(keyvault_name: str, dotenv_file: str) -> None:
         logging.info("no secrets found in .env file")
         return None
     send_secrets(client, local_secrets)
+
+
+def delete_keyvault_secrets(keyvault_name: str, secret_list: list) -> None:
+    """
+    Function for deleting a list of secrets in the keyvault.
+    Parameters
+    ----------
+    keyvault_name: str
+        name of the keyvault containing the secrets
+    secret_list: list
+        dictionary containing secrets that need to be deleted.
+
+    Returns
+    -------
+    None
+        creates the secret in the keyvault.
+    """
+
+    client = create_keyvault_client(keyvault_name=keyvault_name)
+    for secret in secret_list:
+        client.begin_delete_secret(secret).result()
+
+    logging.info(f"succesfully deleted secrets {''.join(secret_list)}")
