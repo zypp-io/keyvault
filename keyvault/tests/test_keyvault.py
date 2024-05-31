@@ -35,12 +35,8 @@ def test_keyvault_download_upload():
 
     logging.info("***START TEST DELETING SECRETS FROM KEYVAULT***")
 
-    delete_keyvault_secrets(
-        keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"), secret_list=["USERNAME"]
-    )
-    downloaded_updated_secrets = get_keyvault_secrets(
-        keyvault_name=os.environ.get("TEST_KEYVAULT_NAME")
-    )
+    delete_keyvault_secrets(keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"), secret_list=["USERNAME"])
+    downloaded_updated_secrets = get_keyvault_secrets(keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"))
     pprint(downloaded_updated_secrets)
 
 
