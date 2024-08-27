@@ -1,5 +1,5 @@
-from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
 
 def create_keyvault_client(keyvault_name: str):

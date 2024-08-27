@@ -1,6 +1,7 @@
-from keyvault.auth import create_keyvault_client
 import logging
 import os
+
+from keyvault.auth import create_keyvault_client
 
 
 def get_secret_list(client) -> list:
