@@ -1,6 +1,11 @@
 import os
 
-from keyvault import secrets_to_environment
-
 # The keyvault name is stored in github secrets.
-secrets_to_environment(keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"))
+try:
+    from dotenv import load_dotenv
+    load_dotenv(override=True)
+    print("keyvault", os.environ.get("TEST_KEYVAULT_NAME"))
+except ImportError:
+    print("dotenv not installed")
+
+test_keyvault = os.environ.get("TEST_KEYVAULT_NAME")

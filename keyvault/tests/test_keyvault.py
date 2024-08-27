@@ -3,7 +3,7 @@ import os
 from pprint import pprint
 
 from keyvault import delete_keyvault_secrets, dict_to_keyvault, get_keyvault_secrets
-
+from keyvault.tests import test_keyvault
 """
 This is the testing suite for twinfield tools.
 
@@ -24,11 +24,11 @@ def test_keyvault_download_upload():
 
     my_secrets = {"USERNAME": "PYTHON", "PASSWORD": "12kNDi2lm§!"}
 
-    dict_to_keyvault(keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"), secret_dict=my_secrets)
+    dict_to_keyvault(keyvault_name=test_keyvault, secret_dict=my_secrets)
 
     logging.info("***START TEST DOWNLOADING SECRETS FROM KEYVAULT***")
 
-    downloaded_secrets = get_keyvault_secrets(keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"))
+    downloaded_secrets = get_keyvault_secrets(keyvault_name=test_keyvault)
     pprint(downloaded_secrets)
 
     assert my_secrets == downloaded_secrets
@@ -36,10 +36,10 @@ def test_keyvault_download_upload():
     logging.info("***START TEST DELETING SECRETS FROM KEYVAULT***")
 
     delete_keyvault_secrets(
-        keyvault_name=os.environ.get("TEST_KEYVAULT_NAME"), secret_list=["USERNAME"]
+        keyvault_name=test_keyvault, secret_list=["USERNAME"]
     )
     downloaded_updated_secrets = get_keyvault_secrets(
-        keyvault_name=os.environ.get("TEST_KEYVAULT_NAME")
+        keyvault_name=test_keyvault
     )
     pprint(downloaded_updated_secrets)
 
