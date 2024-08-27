@@ -6,7 +6,7 @@ from azure.keyvault.secrets import SecretClient
 from tqdm import tqdm
 
 from keyvault.auth import create_keyvault_client
-
+from datetime import datetime
 
 def get_dotenv_secrets(dotenv_file: str) -> dict:
     """
@@ -52,7 +52,11 @@ def get_dotenv_secrets(dotenv_file: str) -> dict:
     return local_secrets
 
 
-def dict_to_keyvault(keyvault_name: str, secret_dict: dict) -> None:
+def dict_to_keyvault(
+        keyvault_name: str,
+        secret_dict: dict,
+        **kwargs
+) -> None:
     """
     Parameters
     ----------
@@ -68,17 +72,20 @@ def dict_to_keyvault(keyvault_name: str, secret_dict: dict) -> None:
     """
 
     client = create_keyvault_client(keyvault_name=keyvault_name)
-    send_secrets(client, secret_dict)
+    send_secrets(client, secret_dict, **kwargs)
 
 
-def send_secrets(client: SecretClient, secrets: dict) -> None:
+def send_secrets(
+        client: SecretClient,
+        secrets: dict,
+        **kwargs
+) -> None:
     """
 
     Parameters
     ----------
     client : SecretClient
         keyvault client
-
     secrets: dict
         dictionary containing the secrets
 
@@ -92,7 +99,7 @@ def send_secrets(client: SecretClient, secrets: dict) -> None:
         secret_name = secret_name.replace("_", "-")  # Azure does not accept _ in names. FFS
         logging.debug(f"creating secret name {secret_name}")
         try:
-            client.set_secret(secret_name, secret_value)
+            client.set_secret(secret_name, secret_value, **kwargs)
         except ResourceExistsError:
             # if the secret already exists, first recover the secret and then update the secret.
             client.begin_recover_deleted_secret(secret_name)
@@ -101,7 +108,7 @@ def send_secrets(client: SecretClient, secrets: dict) -> None:
             for _ in tqdm(range(10), desc="Secret is in soft delete state: Waiting to recover..."):
                 sleep(1)
 
-            client.set_secret(secret_name, secret_value)
+            client.set_secret(secret_name, secret_value, **kwargs)
 
     logging.info(f"succesfully created {len(secrets)} secrets!")
 
