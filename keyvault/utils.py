@@ -6,7 +6,7 @@ from azure.keyvault.secrets import SecretClient
 from tqdm import tqdm
 
 from keyvault.auth import create_keyvault_client
-from datetime import datetime
+
 
 def get_dotenv_secrets(dotenv_file: str) -> dict:
     """
@@ -52,11 +52,7 @@ def get_dotenv_secrets(dotenv_file: str) -> dict:
     return local_secrets
 
 
-def dict_to_keyvault(
-        keyvault_name: str,
-        secret_dict: dict,
-        **kwargs
-) -> None:
+def dict_to_keyvault(keyvault_name: str, secret_dict: dict, **kwargs) -> None:
     """
     Parameters
     ----------
@@ -75,11 +71,7 @@ def dict_to_keyvault(
     send_secrets(client, secret_dict, **kwargs)
 
 
-def send_secrets(
-        client: SecretClient,
-        secrets: dict,
-        **kwargs
-) -> None:
+def send_secrets(client: SecretClient, secrets: dict, **kwargs) -> None:
     """
 
     Parameters
