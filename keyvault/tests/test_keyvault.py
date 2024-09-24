@@ -50,6 +50,7 @@ def test_keyvault_download_upload():
 
     delete_keyvault_secrets(keyvault_name=test_keyvault, secret_list=["USERNAME"])
     downloaded_updated_secrets = get_keyvault_secrets(keyvault_name=test_keyvault)
+
     pprint(downloaded_updated_secrets)
 
 
