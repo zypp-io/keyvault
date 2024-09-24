@@ -1,8 +1,9 @@
-from keyvault.auth import create_keyvault_client
 import logging
 from azure.core.exceptions import ServiceRequestError
 import os
 from time import sleep
+
+from keyvault.auth import create_keyvault_client
 
 
 def get_secret_list(client) -> list:
@@ -22,7 +23,8 @@ def get_secret_list(client) -> list:
     secret_properties = client.list_properties_of_secrets()
     secrets = list()
     for secret_property in secret_properties:
-        secrets.append(secret_property.name)
+        if secret_property.enabled:
+            secrets.append(secret_property.name)
 
     return secrets
 

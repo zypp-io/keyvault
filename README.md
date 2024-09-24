@@ -84,6 +84,21 @@ The function lets you upload a dictionary, where the key-value pairs are the sec
 from keyvault import dict_to_keyvault
 
 dict_to_keyvault(keyvault_name="mykeyvault", secret_dict={'SECRET_NAME': 'secret value'})
+
+```
+It is also possible to add an expiry date or the content type of the secrets:
+
+```python
+from keyvault import dict_to_keyvault
+from datetime import datetime, timedelta
+expiry_date = datetime.now() + timedelta(days=80)
+
+dict_to_keyvault(
+    keyvault_name="mykeyvault",
+    secret_dict={'SECRET_NAME': 'secret value'},
+    expires_on=expiry_date,
+    content_type="text/plain"
+)
 ```
 
 ## Delete keyvault secrets
