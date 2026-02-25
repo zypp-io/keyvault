@@ -1,6 +1,50 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "keyvault"
+version = "1.0.0"
+description = "A small package for handling project secrets"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "Melvin Folkers" },
+    { name = "Erfan Nariman" },
+    { email = "hello@zypp.io" },
+]
+keywords = ["python", "azure", "keyvault"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "azure-identity>=1.7.1",
+    "azure-keyvault-secrets>=4.3.0",
+    "tqdm>=4.62.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "pytest",
+    "python-dotenv",
+    "ruff",
+]
+
+[project.urls]
+Homepage = "https://github.com/zypp-io/keyvault"
+"Bug Tracker" = "https://github.com/zypp-io/keyvault/issues"
+Source = "https://github.com/zypp-io/keyvault"
+
+[tool.setuptools]
+packages = ["keyvault"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+per-file-ignores = {"__init__.py" = ["F401"]}
+mccabe = {max-complexity = 10}
